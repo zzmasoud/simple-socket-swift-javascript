@@ -35,4 +35,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * This is just a project for my "computer networks" class in university 
-* solution for socket project of this book: [Computer Networking A Top-Down Approach 6th Edition](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiI8beo8LHbAhVIK1AKHRzPAl0QFggmMAA&url=http%3A%2F%2Fwww.bau.edu.jo%2FUserPortal%2FUserProfile%2FPostsAttach%2F10617_1870_1.pdf&usg=AOvVaw0JeKNlLOOCIw-FgNMGUcyP)
+* solution for socket project in this book: [Computer Networking A Top-Down Approach 6th Edition](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwiI8beo8LHbAhVIK1AKHRzPAl0QFggmMAA&url=http%3A%2F%2Fwww.bau.edu.jo%2FUserPortal%2FUserProfile%2FPostsAttach%2F10617_1870_1.pdf&usg=AOvVaw0JeKNlLOOCIw-FgNMGUcyP)
