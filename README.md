@@ -1,11 +1,16 @@
 # simple-socket-swift-javascript
 A simple swift server app , javascript client / Socket , SMTP
 
+
+![Login Form](login.png)
+![Compose Form](compose.png)
+
 ## Getting Started
 
 Just run server and open client (localhost:81818/echo) , try to login and send an email.
 * username and password you enter in login , are your real email address and password.
 * you also need to generate SSL for localhost.
+* this project uses SMTP -> you can just send emails.
 ### Prerequisites
 
 * The server side is written in Swift , using ["Perfect"](https://perfect.org/)
