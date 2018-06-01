@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>MBox</title>
+<script language="javascript" type="text/javascript">
+	var wsUri = "ws://localhost:8181/echo";
+	var output, input, send , main , loginHTML , panelHTML , loadingHTML;
+
+	function init() {
+		output = document.getElementById("output");
+		input = document.getElementById("input");
+        main = document.getElementById("main");
+        loginHTML = '<!DOCTYPE html> <html lang="en"> <head><meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1">  <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">  <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">  <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">  <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">  <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">  <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">  <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">  <link rel="stylesheet" type="text/css" href="css/util.css"> <link rel="stylesheet" type="text/css" href="css/main.css">  </head> <body> <div class="limiter"> <div class="container-login100"> <div class="wrap-login100"> <form class="login100-form validate-form"> <span class="login100-form-logo"> <i class="zmdi zmdi-email"></i> </span> <span class="login100-form-title p-b-34 p-t-27"> Log in </span> <div class="wrap-input100 validate-input" data-validate = "Enter username"> <input class="input100" type="email" name="email" placeholder="Email"> <span class="focus-input100" data-placeholder="&#xf207;"></span> </div> <div class="wrap-input100 validate-input" data-validate="Enter password"> <input class="input100" type="password" name="password" placeholder="Password"> <span class="focus-input100" data-placeholder="&#xf191;"></span> </div><div class="container-login100-form-btn"> <button class="login100-form-btn"  type="button" onclick="login()"> Login </button> </div> </form> </div> </div> </div> <div id="dropDownSelect1"></div><script src="vendor/jquery/jquery-3.2.1.min.js" /> <script src="vendor/animsition/js/animsition.min.js" /><script src="vendor/bootstrap/js/popper.js" /><script src="vendor/bootstrap/js/bootstrap.min.js" /><script src="vendor/select2/select2.min.js" /><script src="vendor/daterangepicker/moment.min.js" /><script src="vendor/daterangepicker/daterangepicker.js"/><script src="vendor/countdowntime/countdowntime.js" /></body> </html>';
+
+panelHTML = "<!DOCTYPE html> <html> <head> <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'> <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'> <link rel=\"stylesheet\" type=\"text/css\" href=\"fonts/iconic/css/material-design-iconic-font.min.css\"> <style type=\"text/css\"> /*////////////////////////////////////////////////////////////////// [ FONT ]*/ @font-face { font-family: Poppins-Regular; src: url('fonts/poppins/Poppins-Regular.ttf'); } @font-face { font-family: Poppins-Medium; src: url('fonts/poppins/Poppins-Medium.ttf'); } @font-face { font-family: Poppins-Bold; src: url('fonts/poppins/Poppins-Bold.ttf'); } @font-face { font-family: Poppins-SemiBold; src: url('fonts/poppins/Poppins-SemiBold.ttf'); } /*////////////////////////////////////////////////////////////////// [ RESTYLE TAG ]*/ body { background: #141E30; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #243B55, #141E30); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ } #container { display: flex; background-color: #D4E1E8; width: 80%; height: 1400px; position:absolute; left:0; right:0; top:0; bottom:0; margin:auto; max-width:80%; max-height:80%; overflow:auto; box-shadow: 0px 0px 20px 10px rgba(0,0,0,0.08); /*direction: rtl;*/ } .left-navigation { width: 20%; background: rgb(34,193,195); background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(36,68,129,1) 100%); position: relative; } .right-content { width: 80%; background-color: #D4E1E8; background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(36,68,129,1) 100%); padding: 20px; /*border: 5px solid rgba(255,255,255,0.12);*/ } .left-navigation ul { list-style-type: none; margin: 0; padding: 0; } .left-navigation li a { display: block; color: #fff; padding: 8px 16px; text-decoration: none; font-family: \"ABeeZee\" , Arial; font-size: 12pt; /*font-weight: 100;*/ transition: all 0.3s; -webkit-transition: all 0.3s; -o-transition: all 0.3s; -moz-transition: all 0.3s; } .left-navigation li:first-child a { font-weight: 700; } /* Change the link color on hover */ .left-navigation li a:hover { background-color: rgba(0,0,0,0.1); color: white; padding-left: 20px; } .left-navigation .bottom-view { position: absolute; bottom: 0; width: 100%; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px; } .bottom-view h1 { text-align: center; font-size: 18pt; font-family: \"Trebuchet MS\", Monaco, monospace; font-weight: 1000; color: #fff; margin: 0; } .bottom-view h4 { text-align: center; font-size: 10pt; font-family: \"Arial\",Monaco, monospace; font-weight: 100; color: rgba(255,255,255,0.6); margin: 0; padding: 5px; } .form-style-8{ font-family: 'Open Sans Condensed', arial, sans; width: auto; padding: 30px; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22); -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22); -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22); background: #CB356B; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #BD3F32, #CB356B); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ background: #C9D6FF; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #E2E2E2, #C9D6FF); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #E2E2E2, #C9D6FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ } .form-style-8 h2{ /*background: #ec008c; /* fallback for old browsers */ /*background: -webkit-linear-gradient(to right, #fc6767, #ec008c); Chrome 10-25, Safari 5.1-6 */ /*background: linear-gradient(to right, #fc6767, #ec008c); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ background: #B993D6; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ text-transform: uppercase; font-family: 'ABeeZee', sans-serif; color: rgba(0,0,0,0.6); font-size: 18px; font-weight: 500; padding: 20px; margin: -30px -30px 30px -30px; } .form-style-8 input[type=\"text\"], .form-style-8 input[type=\"date\"], .form-style-8 input[type=\"datetime\"], .form-style-8 input[type=\"email\"], .form-style-8 input[type=\"number\"], .form-style-8 input[type=\"search\"], .form-style-8 input[type=\"time\"], .form-style-8 input[type=\"url\"], .form-style-8 input[type=\"password\"], .form-style-8 textarea, .form-style-8 select { box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; outline: none; display: block; width: 100%; padding: 7px; border: none; border-bottom: 1px solid rgba(0,0,0,0.04); background: transparent; margin-bottom: 10px; font: 16px ABeeZee,Arial, Helvetica, sans-serif; height: 45px; } .form-style-8 textarea{ resize:none; overflow: hidden; height:200px;} .form-style-8 input[type=\"button\"], .form-style-8 input[type=\"submit\"]{ border: 2px solid #bc4e9c; display: inline-block; cursor: pointer; color: #FFFFFF; font-family: 'Open Sans Condensed', sans-serif; font-size: 14px; padding: 8px 18px; text-decoration: none; text-transform: uppercase; border-radius: 0px; } .form-style-8 input[type=\"button\"]:hover, .form-style-8 input[type=\"submit\"]:hover { border: 2px solid rgba(0,0,0,0.3); background: #bc4e9c; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #f80759, #bc4e9c); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #f80759, #bc4e9c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ } .left-navigation ul .zmdi { padding-right: 10px; } .bottom-view .logo { font-size: 30px; color: #333333; display: -webkit-box; display: -webkit-flex; display: -moz-box; display: -ms-flexbox; display: flex; justify-content: center; align-items: center; width: 60px; height: 60px; border-radius: 50%; background-color: #fff; margin: 0 auto; opacity: 0.8; } .bottom-view .logo:hover { opacity: 1; } .left-side { position: absolute; left: 0; margin-left: 220px; margin-top: 20px; } .right-side { position: absolute; right: 0; margin-right: 20px; margin-top: 20px; } .form-buttons button { font-family:'ABeeZee', sans-serif; font-size: 16px; color: #fff; line-height: 1.2; padding: 0 20px; min-width: 120px; height: 40px; /*border-radius: 25px;*/ border: 2px solid rgba(255,255,255,0.7); background-color: transparent; transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s; cursor: pointer; outline:none; } .form-buttons button:hover { border-radius: 25px; background-color: #fff; color: #555; /*box-shadow: 0 0 15px 5px rgba(0,0,0,0.1);*/ } .form-buttons button:active { background-color: #b3dbff; } </style> <title>MBox</title> </head> <body> <div id=\"container\"> <div class=\"left-navigation\"> <ul> <li><a href=\"#home\"><i class=\"zmdi zmdi-mail-send\"></i>Compose</a></li> <li><a href=\"#news\"><i class=\"zmdi zmdi-email\"></i>Inbox</a></li> <li><a href=\"#about\"><i class=\"zmdi zmdi-delete\"></i>Trash</a></li> </ul> <div class =\"bottom-view\"> <span class=\"logo\"> <i class=\"zmdi zmdi-email\"></i> </span> <!-- <h1>ᗰᗷO᙭</h1> --> <h4>Masoud Sh - 2018</h4> </div> </div> <div class =\"right-content\"> <div class=\"form-style-8\"> <h2>Compose a new mail</h2> <form id=\"mailform\"> <input type=\"text\" name=\"subject\" placeholder=\"Subject\" /> <input type=\"email\" name=\"destination\" placeholder=\"To\" /><textarea placeholder=\"Message\" name=\"message\"></textarea> </form> </div> <div class=\"form-buttons left-side\"> <button>Attachments</button> </div> <div class=\"form-buttons right-side\"> <button onclick=\"clearForm()\">Clear</button> <button onclick=\"sendForm()\">Send</button> </div> </div> </div> </body> </html>";
+        
+        loadingHTML = "<html><head><link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'><style>body {background: #141E30;  /* fallback for old browsers */background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */background: linear-gradient(to right, #243B55, #141E30);}div {top: 50%;left: 50%;width:30em;height:18em;margin-top: -9em;margin-left: -15em;position:fixed;}h1 {color: #fff;font-family: 'ABeeZee', sans-serif;text-transform: uppercase;}.success {background: #11998e;  /* fallback for old browsers */background: -webkit-linear-gradient(to right, #38ef7d, #11998e);  /* Chrome 10-25, Safari 5.1-6 */background: linear-gradient(to right, #38ef7d, #11998e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */}.failed {background: #CB356B;  /* fallback for old browsers */background: -webkit-linear-gradient(to right, #BD3F32, #CB356B);  /* Chrome 10-25, Safari 5.1-6 */background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */}</style></head><body id=\"body\"><div><center><h1 id=\"status\">Sending...</h1></center></div></body></html>";
+        
+        webSocket();
+        
+	}
+
+	function webSocket() {
+		var wsUri = "ws://localhost:8181/echo";
+		websocket = new WebSocket(wsUri, "echo");
+		websocket.onopen = function(evt) { onOpen(evt) };
+		websocket.onclose = function(evt) { onClose(evt) };
+		websocket.onmessage = function(evt) { onMessage(evt) };
+		websocket.onerror = function(evt) { onError(evt) };
+	}
+
+	function onOpen(evt) {
+        showLogin();
+	}
+
+	function onClose(evt) {
+		writeToScreen("DISCONNECTED");
+	}
+
+	function onMessage(evt) {
+        var response = evt.data;
+        console.log(response);
+        if (response == "ok") {
+            showPanel();
+        } else if( response == "success") {
+            successOp()
+            
+        } else if ( response == "failed") {
+            failedOp()
+        }
+	}
+
+	function onError(evt) {
+		writeToScreen('<span style="color: red;">ERROR:<\/span> ' + evt.data);
+	}
+
+	function writeToScreen(message) {
+        main .innerHTML = message;
+	}
+
+    function showLogin() {
+        main.innerHTML = loginHTML;
+    }
+    function showPanel() {
+        main.innerHTML = panelHTML;
+    }
+
+    function showLoading() {
+        main.innerHTML = loadingHTML;
+    }
+
+    function successOp() {
+        document.body.className = "success";
+        document.getElementById("status").innerHTML = "success"
+        
+        setTimeout(function() {
+                   showPanel();
+                   }, 1000);
+
+    }
+    function failedOp() {
+        document.body.className = "failed";
+        document.getElementById("status").innerHTML = "failed"
+        setTimeout(function() {
+                   showPanel();
+                   }, 1000);
+
+    }
+
+
+    function login() {
+        var email = document.querySelector('[name="email"]').value;
+        var password = document.querySelector('[name="password"]').value;
+        
+        var json = JSON.stringify({"email":email, "password":password});
+        websocket.send(json);
+        
+    }
+ function sendForm() {
+        var subject = document.querySelector('[name="subject"]').value;
+        var destination = document.querySelector('[name="destination"]').value;
+        var message = document.querySelector('[name="message"]').value;
+        
+        var json = JSON.stringify({"subject":subject, "destination":destination , "message":message});
+        websocket.send(json);
+        showLoading();
+        
+    }
+
+
+    function clearForm() {
+        document.getElementById("mailform").reset();
+    }
+
+   
+
+	window.addEventListener("load", init, false);
+</script>
+</head>
+<body>
+<div id="main">
+</div>
+</body>
+</html>
